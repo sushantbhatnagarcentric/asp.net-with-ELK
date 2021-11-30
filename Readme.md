@@ -6,7 +6,9 @@ This lets us find what exactly is going on with the system at any given point of
 
 In this repository, am using a sample ASP.net code that contains a controller which is dealing with FoodItems. You can GET/POST/PUT/PATCH and DELETE them.   
 
-## Versions
+## Application UI/Version
+
+In this repository, am using a sample ASP.net code that contains a controller which is dealing with FoodItems. You can GET/POST/PUT/PATCH and DELETE them.   
 
 ``` http://localhost:29435/swagger ```
 
@@ -14,6 +16,7 @@ In this repository, am using a sample ASP.net code that contains a controller wh
 
 
 ## Pre-requisites
+
 - Asp.net Sample code should be running on the system
 - ElasticSearch should be installed and accessible at "http://your-elasticsearch-url:9200"
 - Kibana should be installed and accessible at "http://your-kibana-url:5601"
@@ -59,7 +62,10 @@ Add the ElasticSearch configuration to the appsettings.json file
 Under your Host.CreateDefaultBuilder(args) method, add the following code to make this mechanism work
 
 ```C#
-.UseSerilog(configureLogger:(context, configuration) => 
+Host.CreateDefaultBuilder(args)
+               
+            // Begin - Coding for SeriLog Logging
+               .UseSerilog(configureLogger:(context, configuration) => 
                {
                    configuration.Enrich.FromLogContext()
                         .Enrich.WithMachineName()                
@@ -79,37 +85,18 @@ Under your Host.CreateDefaultBuilder(args) method, add the following code to mak
 ```
 
 
-## PUT a foodItem
+## Run the application
 
-``` http://localhost:29435/api/v1/foods/5 ```
+With this minimal configuration, you are good to run the asp.net code/app. There shall be few things logged once the application runs and the same can be viewed in Kibana, that is accessible on "http://your-kibana-url:5601".   
 
-``` javascript
-{
-    "name": "Lasagne2",
-    "type": "Main",
-    "calories": 3000,
-    "created": "2017-09-16T17:50:08.1510899+02:00"
-}
-```
+## Kibana dashboard
 
-![ASPNETCOREWebAPIGET](./.github/put.jpg)
+Go to Stack Management/Index Patterns: 
 
+Index Pattern is a naming convention for the logging to collect the logs and other things as a group.
 
-## PATCH a foodItem
+I will be setting up the index pattern name as "elastic-search-app-logs-* " based on the index appearing in Kibana. Select time field as timestamp and create the index pattern. 
+Go back to the dashboard and click Discover in Kibana. 
 
-``` http://localhost:29435/api/v1/foods/5 ```
+All the logs will start appearing in Kibana.  
 
-``` javascript
-[
-  { "op": "replace", "path": "/name", "value": "mynewname" }
-]
-```
-
-![ASPNETCOREWebAPIGET](./.github/patch.jpg)
-
-## DELETE a foodItem
-
-``` http://localhost:29435/api/v1/foods/5 ```
-
-
-![ASPNETCOREWebAPIGET](./.github/delete.jpg)
