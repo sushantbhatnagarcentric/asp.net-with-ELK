@@ -4,8 +4,6 @@ In this repository I want to give a plain starting point at how to log into Elas
 
 This lets us find what exactly is going on with the system at any given point of time and helps us build a scalable and filterable system.  
 
-In this repository, am using a sample ASP.net code that contains a controller which is dealing with FoodItems. You can GET/POST/PUT/PATCH and DELETE them.   
-
 ## Application UI/Version
 
 In this repository, am using a sample ASP.net code that contains a controller which is dealing with FoodItems. You can GET/POST/PUT/PATCH and DELETE them.   
