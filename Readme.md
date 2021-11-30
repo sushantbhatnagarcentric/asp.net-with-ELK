@@ -4,7 +4,7 @@ In this repository I want to give a plain starting point at how to log into Elas
 
 This lets us find what exactly is going on with the system at any given point of time and helps us build a scalable and filterable system.  
 
-For this PoC, am using a sample ASP.net code that contains a controller which is dealing with FoodItems. You can GET/POST/PUT/PATCH and DELETE them.   
+In this repository, am using a sample ASP.net code that contains a controller which is dealing with FoodItems. You can GET/POST/PUT/PATCH and DELETE them.   
 
 ## Versions
 
@@ -15,15 +15,33 @@ For this PoC, am using a sample ASP.net code that contains a controller which is
 
 ## Nuget Packages to be installed
 
-``` http://localhost:29435/api/v1/foods ```
+- Serilog.AspNetCore
+  - This package also brings in a bunch of enrichers that automatically start to install any request in our system.
 
-![ASPNETCOREWebAPIGET](./.github/get.jpg)
+- Serilog.Sinks.ElasticSearch
+  - This is where we are going to push the data in to Elastic Search
 
-## GET single food
+- Serilog.Enrichers.Environment
 
-``` http://localhost:29435/api/v1/foods/2 ```
+- ElasticSearch
 
-![ASPNETCOREWebAPIGET](./.github/getSingle.jpg)
+
+
+## appsettings.json
+
+Update the Logging section with below code:
+
+```json
+  "ApplicationName":  "elastic-search-app",
+  "Serilog": {
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "Microsoft": "Information",
+        "System": "Warning"
+      }
+   }
+```
 
 ## POST a foodItem
 
