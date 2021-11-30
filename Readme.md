@@ -1,12 +1,10 @@
-# ASP.NET Core WebApi Sample with HATEOAS, Versioning & Swagger
+# ASP.NET Core WebApi Logging with SeriLog and ELK stack
 
-In this repository I want to give a plain starting point at how to build a WebAPI with ASP.NET Core.
+In this repository I want to give a plain starting point at how to log into ElasticSearch using SeriLog and view logs in Kibana ( ELK stack ).
 
-This repository contains a controller which is dealing with FoodItems. You can GET/POST/PUT/PATCH and DELETE them.
+This lets us find what exactly is going on with the system at any given point of time and helps us build a scalable and filterable system.  
 
-Hope this helps.
-
-See the examples here: 
+For this PoC, am using a sample ASP.net code that contains a controller which is dealing with FoodItems. You can GET/POST/PUT/PATCH and DELETE them.   
 
 ## Versions
 
@@ -14,7 +12,8 @@ See the examples here:
 
 ![ASPNETCOREWebAPIVersions](./.github/versions.jpg)
 
-## GET all Foods
+
+## Nuget Packages to be installed
 
 ``` http://localhost:29435/api/v1/foods ```
 
