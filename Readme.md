@@ -13,6 +13,12 @@ In this repository, am using a sample ASP.net code that contains a controller wh
 ![ASPNETCOREWebAPIVersions](./.github/versions.jpg)
 
 
+## Pre-requisites
+- Asp.net Sample code should be running on the system
+- ElasticSearch should be installed and accessible at "http://your-elasticsearch-url:9200"
+- Kibana should be installed and accessible at "http://your-kibana-url:5601"
+
+
 ## Nuget Packages to be installed
 
 - Serilog.AspNetCore
@@ -23,16 +29,13 @@ In this repository, am using a sample ASP.net code that contains a controller wh
 
 - Serilog.Enrichers.Environment
 
-- ElasticSearch
 
-
-
-## appsettings.json
+## appsettings.json file
 
 Update the Logging section with below code:
 
 ```json
-  "ApplicationName":  "elastic-search-app",
+  "ApplicationName":  "your app-name",
   "Serilog": {
     "MinimumLevel": {
       "Default": "Information",
@@ -43,20 +46,38 @@ Update the Logging section with below code:
    }
 ```
 
-## POST a foodItem
+Add the ElasticSearch configuration to the appsettings.json file
 
-``` http://localhost:29435/api/v1/foods ```
-
-```javascript
-  {
-      "name": "Lasagne",
-      "type": "Main",
-      "calories": 3000,
-      "created": "2017-09-16T17:50:08.1510899+02:00"
-  }
+```json
+"ElasticConfiguration": {
+    "Uri": "http://your-elasticsearch-url:9200"
+  },
 ```
 
-![ASPNETCOREWebAPIGET](./.github/post.jpg)
+## Program.cs file
+
+Under your Host.CreateDefaultBuilder(args) method, add the following code to make this mechanism work
+
+```C#
+.UseSerilog(configureLogger:(context, configuration) => 
+               {
+                   configuration.Enrich.FromLogContext()
+                        .Enrich.WithMachineName()                
+                        .WriteTo.Console()
+                        .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(context.Configuration["ElasticConfiguration:Uri"]))
+                        {
+                            IndexFormat = $"{context.Configuration["ApplicationName"]}-logs-{context.HostingEnvironment.EnvironmentName?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yyyy-MM}",
+
+                            AutoRegisterTemplate = true,
+                            NumberOfShards = 2,
+                            NumberOfReplicas = 1
+                        })
+                        .Enrich.WithProperty("Environment", context.HostingEnvironment.EnvironmentName)
+                        .ReadFrom.Configuration(context.Configuration);
+
+               })
+```
+
 
 ## PUT a foodItem
 
