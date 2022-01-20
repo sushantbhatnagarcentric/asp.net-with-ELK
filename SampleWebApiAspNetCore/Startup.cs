@@ -82,7 +82,6 @@ namespace SampleWebApiAspNetCore
         {
             app.UseElasticApm();
 
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -113,10 +112,6 @@ namespace SampleWebApiAspNetCore
                             description.GroupName.ToUpperInvariant());
                     }
                 });
-            //app.UseElasticApm(Configuration);
-            //app.UseAllElasticApm();
-            
-
         }
     }
 }
