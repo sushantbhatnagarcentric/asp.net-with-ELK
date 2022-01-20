@@ -45,8 +45,4 @@ You should be able to monitor the application with parameters such as **Latency*
 ![img.png](img.png)
 You can also see the **Traces** of all the transactions done during the application monitoring.
 
-
-![traces.png](traces.png)
-
-
 ![trace-2.png](trace-2.png)
