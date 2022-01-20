@@ -43,9 +43,10 @@ You should see your application name appearing as the Service name there. Click 
 You should be able to monitor the application with parameters such as **Latency**, **Throughput**, **Transactions**, **Errors**, **Failed Transaction Rates** and many more...
 
 ![img.png](img.png)
-
 You can also see the **Traces** of all the transactions done during the application monitoring.
 
+
 ![traces.png](traces.png)
+
 
 ![trace-2.png](trace-2.png)
